@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% from "macros.html" import status_badge, severity_badge, pagination_bar %}
+{% block page_title %}My Reports{% endblock %}
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">My submitted reports</h2>
+    <a href="{{ url_for('employee.submit_report') }}" class="btn btn-danger btn-sm">🚨 New report</a>
+  </div>
+
+  <form method="get" action="{{ url_for('employee.my_reports') }}" class="filter-bar">
+    <select name="status" onchange="this.form.submit()">
+      <option value="">All statuses</option>
+      {% for key, label in STATUSES.items() %}
+        <option value="{{ key }}" {{ 'selected' if status == key }}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </form>
+
+  {% if pagination.items %}
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th><th>Subject</th><th>Sender</th><th>Attack type</th>
+          <th>Severity</th><th>Status</th><th>Submitted</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for report in pagination.items %}
+        <tr>
+          <td>#{{ report.id }}</td>
+          <td>{{ report.subject }}</td>
+          <td>{{ report.sender_address }}</td>
+          <td>{{ report.attack_type_label }}</td>
+          <td>{{ severity_badge(report.severity) }}</td>
+          <td>{{ status_badge(report.status) }}</td>
+          <td>{{ report.created_at.strftime('%Y-%m-%d') }}</td>
+          <td><a class="btn btn-ghost btn-sm" href="{{ url_for('employee.report_detail', report_id=report.id) }}">View</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {{ pagination_bar(pagination, 'employee.my_reports', extra={'status': status}) }}
+  {% else %}
+  <p class="empty-state">No reports match this filter.</p>
+  {% endif %}
+</div>
+{% endblock %}

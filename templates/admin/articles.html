@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block page_title %}Awareness Articles{% endblock %}
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Awareness articles ({{ articles | length }})</h2>
+    <a href="{{ url_for('admin.new_article') }}" class="btn btn-primary btn-sm">+ New article</a>
+  </div>
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr><th>Title</th><th>Category</th><th>Updated</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for article in articles %}
+        <tr>
+          <td><a href="{{ url_for('awareness.article_detail', article_id=article.id) }}">{{ article.title }}</a></td>
+          <td><span class="badge badge-info">{{ ARTICLE_CATEGORIES.get(article.category, article.category) }}</span></td>
+          <td>{{ article.updated_at.strftime('%Y-%m-%d') }}</td>
+          <td class="table-actions">
+            <a class="btn btn-ghost btn-sm" href="{{ url_for('admin.edit_article', article_id=article.id) }}">Edit</a>
+            <form method="post" action="{{ url_for('admin.delete_article', article_id=article.id) }}"
+                  data-confirm="Delete the article '{{ article.title }}'?">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

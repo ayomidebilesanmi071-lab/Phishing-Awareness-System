@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% from "macros.html" import text_input %}
+{% block title %}Register · PARS{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <div class="auth-brand">
+    <span class="brand-icon brand-icon-lg">🛡️</span>
+    <h1>Create an account</h1>
+    <p>Employee self-registration · accounts start with the <em>Employee</em> role</p>
+  </div>
+  <form method="post" action="{{ url_for('auth.register') }}" class="auth-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {{ text_input('full_name', 'Full name', value=form_data.get('full_name', ''),
+                  error=form_errors.get('full_name'), required=true, autocomplete='name') }}
+    {{ text_input('email', 'Email address', value=form_data.get('email', ''),
+                  error=form_errors.get('email'), type='email', required=true, autocomplete='username') }}
+    {{ text_input('password', 'Password', error=form_errors.get('password'), type='password',
+                  required=true, help='At least 8 characters with letters and numbers.', autocomplete='new-password') }}
+    {{ text_input('confirm_password', 'Confirm password', error=form_errors.get('confirm_password'),
+                  type='password', required=true, autocomplete='new-password') }}
+    <button type="submit" class="btn btn-primary btn-block">Create account</button>
+  </form>
+  <p class="auth-alt">Already registered? <a href="{{ url_for('auth.login') }}">Log in</a></p>
+</div>
+{% endblock %}

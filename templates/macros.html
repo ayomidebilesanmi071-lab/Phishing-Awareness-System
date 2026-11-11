@@ -1,0 +1,58 @@
+{% macro text_input(name, label, value='', error=None, type='text', placeholder='', required=false, help='', autocomplete='off') -%}
+  <div class="form-group {{ 'has-error' if error }}">
+    <label for="{{ name }}">{{ label }}{% if required %} <span class="required">*</span>{% endif %}</label>
+    <input type="{{ type }}" id="{{ name }}" name="{{ name }}" value="{{ value }}"
+           placeholder="{{ placeholder }}" autocomplete="{{ autocomplete }}"
+           {% if required %}required{% endif %}>
+    {% if help %}<small class="form-help">{{ help }}</small>{% endif %}
+    {% if error %}<span class="field-error">{{ error }}</span>{% endif %}
+  </div>
+{%- endmacro %}
+
+{% macro textarea_input(name, label, value='', error=None, rows=6, required=false, help='') -%}
+  <div class="form-group {{ 'has-error' if error }}">
+    <label for="{{ name }}">{{ label }}{% if required %} <span class="required">*</span>{% endif %}</label>
+    <textarea id="{{ name }}" name="{{ name }}" rows="{{ rows }}" {% if required %}required{% endif %}>{{ value }}</textarea>
+    {% if help %}<small class="form-help">{{ help }}</small>{% endif %}
+    {% if error %}<span class="field-error">{{ error }}</span>{% endif %}
+  </div>
+{%- endmacro %}
+
+{% macro select_input(name, label, options, value='', error=None, required=false) -%}
+  <div class="form-group {{ 'has-error' if error }}">
+    <label for="{{ name }}">{{ label }}{% if required %} <span class="required">*</span>{% endif %}</label>
+    <select id="{{ name }}" name="{{ name }}" {% if required %}required{% endif %}>
+      <option value="">-- Select --</option>
+      {% for val, lbl in options %}
+        <option value="{{ val }}" {% if value == val %}selected{% endif %}>{{ lbl }}</option>
+      {% endfor %}
+    </select>
+    {% if error %}<span class="field-error">{{ error }}</span>{% endif %}
+  </div>
+{%- endmacro %}
+
+{% macro status_badge(status) -%}
+  <span class="badge badge-{{ status }}">{{ STATUSES.get(status, status) }}</span>
+{%- endmacro %}
+
+{% macro severity_badge(severity) -%}
+  <span class="badge badge-severity-{{ severity }}">{{ SEVERITIES.get(severity, severity) }}</span>
+{%- endmacro %}
+
+{% macro pagination_bar(p, endpoint, extra=None) -%}
+  {% if p.pages > 1 %}
+    <nav class="pagination">
+      {% if p.has_prev %}
+        <a class="btn btn-ghost btn-sm" href="{{ url_for(endpoint, page=p.prev_num, **(extra or {})) }}">← Prev</a>
+      {% else %}
+        <span class="btn btn-ghost btn-sm disabled">← Prev</span>
+      {% endif %}
+      <span class="pagination-info">Page {{ p.page }} of {{ p.pages }} ({{ p.total }} items)</span>
+      {% if p.has_next %}
+        <a class="btn btn-ghost btn-sm" href="{{ url_for(endpoint, page=p.next_num, **(extra or {})) }}">Next →</a>
+      {% else %}
+        <span class="btn btn-ghost btn-sm disabled">Next →</span>
+      {% endif %}
+    </nav>
+  {% endif %}
+{%- endmacro %}

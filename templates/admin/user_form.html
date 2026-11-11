@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% from "macros.html" import text_input, select_input %}
+{% block page_title %}{{ 'Edit User' if editing else 'New User' }}{% endblock %}
+{% block content %}
+
+<div class="card card-narrow">
+  <h2 class="card-title">{{ 'Edit user: ' ~ editing.email if editing else 'Create a new account' }}</h2>
+  {% if editing and reports_count %}
+    <p class="muted">This user has submitted {{ reports_count }} report(s). The account cannot be
+       deleted while reports exist — deactivate it instead.</p>
+  {% endif %}
+
+  <form method="post"
+        action="{{ url_for('admin.edit_user', user_id=editing.id) if editing else url_for('admin.new_user') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {{ text_input('full_name', 'Full name',
+                  value=form_data.get('full_name', editing.full_name if editing else ''),
+                  error=form_errors.get('full_name'), required=true) }}
+    {{ text_input('email', 'Email address',
+                  value=form_data.get('email', editing.email if editing else ''),
+                  error=form_errors.get('email'), type='email', required=true) }}
+
+    {{ select_input('role', 'Role',
+                    role_options,
+                    value=form_data.get('role', editing.role if editing else ''),
+                    error=form_errors.get('role'), required=true) }}
+
+    {% if editing %}
+      <div class="form-group">
+        <label class="checkbox-row">
+          <input type="checkbox" name="active" {{ 'checked' if editing.is_active }}>
+          <span>Account active (can log in)</span>
+        </label>
+      </div>
+      {{ text_input('new_password', 'Reset password (leave blank to keep current)',
+                    value='', error=form_errors.get('new_password'), type='password',
+                    help='At least 8 characters with letters and numbers.') }}
+    {% else %}
+      {{ text_input('password', 'Password', value='', error=form_errors.get('password'),
+                    type='password', required=true,
+                    help='At least 8 characters with letters and numbers.') }}
+    {% endif %}
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">{{ 'Save changes' if editing else 'Create account' }}</button>
+      <a href="{{ url_for('admin.users') }}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

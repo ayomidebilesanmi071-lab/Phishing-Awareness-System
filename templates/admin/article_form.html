@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from "macros.html" import text_input, textarea_input, select_input %}
+{% block page_title %}{{ 'Edit Article' if editing else 'New Article' }}{% endblock %}
+{% block content %}
+
+<div class="card card-narrow">
+  <h2 class="card-title">{{ 'Edit article' if editing else 'Publish a new awareness article' }}</h2>
+  <form method="post"
+        action="{{ url_for('admin.edit_article', article_id=editing.id) if editing else url_for('admin.new_article') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {{ text_input('title', 'Title', value=form_data.get('title', ''), error=form_errors.get('title'), required=true) }}
+    {{ select_input('category', 'Category', categories.items(),
+                    value=form_data.get('category', ''), error=form_errors.get('category'), required=true) }}
+    {{ textarea_input('content', 'Content', value=form_data.get('content', ''),
+                      error=form_errors.get('content'), rows=14, required=true,
+                      help='Plain text is fine; paragraphs separated by blank lines.') }}
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">{{ 'Save changes' if editing else 'Publish article' }}</button>
+      <a href="{{ url_for('admin.articles') }}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

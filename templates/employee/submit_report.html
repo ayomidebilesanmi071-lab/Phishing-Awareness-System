@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% from "macros.html" import text_input, textarea_input, select_input %}
+{% block page_title %}Report Suspicious Message{% endblock %}
+{% block content %}
+
+<div class="card">
+  <h2 class="card-title">Report a suspicious email or message</h2>
+  <p class="muted">Do <strong>not</strong> click links or open attachments from the suspicious
+     message. Paste the details below — the security team will investigate. Any link you enter
+     is stored as plain text and never opened automatically.</p>
+
+  <form method="post" action="{{ url_for('employee.submit_report') }}" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div class="form-row">
+      <div class="form-col">
+        {{ text_input('sender_address', 'Sender email / address', value=form_data.get('sender_address', ''),
+                      error=form_errors.get('sender_address'), required=true, placeholder='attacker@example.com') }}
+      </div>
+      <div class="form-col">
+        {{ text_input('subject', 'Email / message subject', value=form_data.get('subject', ''),
+                      error=form_errors.get('subject'), required=true, placeholder='URGENT: verify your account') }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-col">
+        {{ text_input('suspicious_link', 'Suspicious URL / link (optional)',
+                      value=form_data.get('suspicious_link', ''),
+                      error=form_errors.get('suspicious_link'),
+                      placeholder='https://example-evil.com/login',
+                      help='Only http/https links are accepted. The link will not be opened by the system.') }}
+      </div>
+      <div class="form-col">
+        {{ text_input('date_received', 'Date received', value=form_data.get('date_received', ''),
+                      error=form_errors.get('date_received'), type='date',
+                      help='Defaults to today when left blank.') }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-col">
+        {{ select_input('attack_type', 'Suspected attack type', attack_types.items(),
+                        value=form_data.get('attack_type', ''), error=form_errors.get('attack_type'), required=true) }}
+      </div>
+      <div class="form-col">
+        <div class="form-group">
+          <label for="attachment">Attachment / evidence (optional)</label>
+          <input type="file" id="attachment" name="attachment"
+                 accept=".png,.jpg,.jpeg,.gif,.webp,.pdf,.txt">
+          {% if form_errors.get('attachment') %}<span class="field-error">{{ form_errors.get('attachment') }}</span>{% endif %}
+          <small class="form-help">Max 2 MB. Allowed: images, PDF, text files. Files are stored securely
+            with a random name and downloaded, never opened by the server.</small>
+        </div>
+      </div>
+    </div>
+
+    {{ textarea_input('message_content', 'Message content or description',
+                      value=form_data.get('message_content', ''),
+                      error=form_errors.get('message_content'), rows=8, required=true,
+                      help='Paste the full message or describe what you saw.') }}
+
+    {{ textarea_input('comments', 'Additional comments (optional)',
+                      value=form_data.get('comments', ''),
+                      error=form_errors.get('comments'), rows=3,
+                      help='Anything else the analyst should know.') }}
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-danger">🚨 Submit report</button>
+      <a href="{{ url_for('employee.dashboard') }}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

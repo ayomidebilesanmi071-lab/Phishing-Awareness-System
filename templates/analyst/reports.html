@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% from "macros.html" import status_badge, severity_badge, pagination_bar %}
+{% block page_title %}All Reports{% endblock %}
+{% block content %}
+
+<div class="card">
+  <h2 class="card-title">Search &amp; filter reports</h2>
+  <form method="get" action="{{ url_for('analyst.reports') }}" class="filter-bar filter-bar-grid">
+    <div class="form-group">
+      <label for="q">Search</label>
+      <input type="text" id="q" name="q" value="{{ filters.q }}"
+             placeholder="Sender, subject, attack type or report ID">
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        <option value="">All</option>
+        {% for key, label in STATUSES.items() %}
+          <option value="{{ key }}" {{ 'selected' if filters.status == key }}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="severity">Severity</label>
+      <select id="severity" name="severity">
+        <option value="">All</option>
+        {% for key, label in SEVERITIES.items() %}
+          <option value="{{ key }}" {{ 'selected' if filters.severity == key }}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="attack_type">Attack type</label>
+      <select id="attack_type" name="attack_type">
+        <option value="">All</option>
+        {% for key, label in ATTACK_TYPES.items() %}
+          <option value="{{ key }}" {{ 'selected' if filters.attack_type == key }}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="date_from">From</label>
+      <input type="date" id="date_from" name="date_from" value="{{ filters.date_from }}">
+    </div>
+    <div class="form-group">
+      <label for="date_to">To</label>
+      <input type="date" id="date_to" name="date_to" value="{{ filters.date_to }}">
+    </div>
+    <div class="form-group filter-actions">
+      <button type="submit" class="btn btn-primary">Apply filters</button>
+      <a href="{{ url_for('analyst.reports') }}" class="btn btn-ghost">Clear</a>
+    </div>
+  </form>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Reports ({{ pagination.total }})</h2>
+  </div>
+  {% if pagination.items %}
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th><th>Subject</th><th>Sender</th><th>Reporter</th>
+          <th>Attack type</th><th>Severity</th><th>Status</th><th>Submitted</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for report in pagination.items %}
+        <tr>
+          <td>#{{ report.id }}</td>
+          <td>{{ report.subject }}</td>
+          <td>{{ report.sender_address }}</td>
+          <td>{{ report.reporter.full_name }}</td>
+          <td>{{ report.attack_type_label }}</td>
+          <td>{{ severity_badge(report.severity) }}</td>
+          <td>{{ status_badge(report.status) }}</td>
+          <td>{{ report.created_at.strftime('%Y-%m-%d') }}</td>
+          <td><a class="btn btn-primary btn-sm" href="{{ url_for('analyst.report_detail', report_id=report.id) }}">Investigate</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {{ pagination_bar(pagination, 'analyst.reports', extra={'q': filters.q, 'status': filters.status,
+      'severity': filters.severity, 'attack_type': filters.attack_type,
+      'date_from': filters.date_from, 'date_to': filters.date_to}) }}
+  {% else %}
+  <p class="empty-state">No reports match your criteria.</p>
+  {% endif %}
+</div>
+{% endblock %}

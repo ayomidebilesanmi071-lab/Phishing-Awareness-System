@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% from "macros.html" import status_badge, severity_badge %}
+{% block page_title %}Report #{{ report.id }} · Investigation{% endblock %}
+{% block content %}
+
+<div class="detail-header">
+  <div>
+    <h2>Report #{{ report.id }} <span class="muted">· {{ report.attack_type_label }}</span></h2>
+    <p class="muted">Submitted {{ report.created_at.strftime('%Y-%m-%d %H:%M') }} by
+      {{ report.reporter.full_name }} ({{ report.reporter.email }})</p>
+  </div>
+  <div class="detail-badges">
+    {{ severity_badge(report.severity) }}
+    {{ status_badge(report.status) }}
+  </div>
+</div>
+
+<div class="detail-grid">
+  <div class="detail-main">
+    <div class="card">
+      <h3 class="card-title">Report details</h3>
+      <dl class="detail-list">
+        <dt>Report ID</dt><dd>#{{ report.id }}</dd>
+        <dt>Reporter</dt><dd>{{ report.reporter.full_name }} ({{ report.reporter.email }})</dd>
+        <dt>Sender address</dt><dd>{{ report.sender_address }}</dd>
+        <dt>Subject</dt><dd>{{ report.subject }}</dd>
+        <dt>Suspicious link</dt>
+        <dd>
+          {% if report.suspicious_link %}
+            <span class="link-text">{{ report.suspicious_link }}</span>
+            <button type="button" class="btn btn-ghost btn-sm" data-copy="{{ report.suspicious_link }}">Copy</button>
+            <small class="form-help">Shown as untrusted text only — never opened by the system.</small>
+          {% else %}<span class="muted">None provided</span>{% endif %}
+        </dd>
+        <dt>Attack type</dt><dd>{{ report.attack_type_label }}</dd>
+        <dt>Severity</dt><dd>{{ report.severity_label }}</dd>
+        <dt>Date received</dt><dd>{{ report.date_received.strftime('%Y-%m-%d') if report.date_received else '—' }}</dd>
+        <dt>Date reported</dt><dd>{{ report.created_at.strftime('%Y-%m-%d %H:%M') }}</dd>
+        <dt>Message details</dt><dd>{{ report.message_content | nl2br }}</dd>
+        {% if report.comments %}<dt>Additional comments</dt><dd>{{ report.comments | nl2br }}</dd>{% endif %}
+        {% if report.has_attachment %}
+          <dt>Evidence attachment</dt>
+          <dd><a class="btn btn-ghost btn-sm" href="{{ url_for('employee.attachment', report_id=report.id) }}">⬇ Download {{ report.attachment_original_name }}</a></dd>
+        {% endif %}
+      </dl>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">Investigation</h3>
+      {% if not report.investigation %}
+        <p class="muted">No investigation has been started for this report yet.</p>
+        <form method="post" action="{{ url_for('analyst.start_investigation', report_id=report.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-primary">🔎 Start investigation</button>
+        </form>
+      {% else %}
+        {% set investigation = report.investigation %}
+        <dl class="detail-list">
+          <dt>Started</dt><dd>{{ investigation.started_at.strftime('%Y-%m-%d %H:%M') }} by {{ investigation.analyst.full_name }}</dd>
+          {% if investigation.classification %}
+            <dt>Classification</dt>
+            <dd><span class="badge badge-{{ investigation.classification }}">{{ CLASSIFICATIONS.get(investigation.classification, investigation.classification) }}</span></dd>
+          {% else %}
+            <dt>Classification</dt><dd class="muted">Not yet classified</dd>
+          {% endif %}
+          <dt>Last updated</dt><dd>{{ investigation.investigated_at.strftime('%Y-%m-%d %H:%M') }}</dd>
+        </dl>
+
+        <h4 class="subtitle">Findings</h4>
+        <form method="post" action="{{ url_for('analyst.add_findings', report_id=report.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <div class="form-group">
+            <textarea name="findings" rows="5" placeholder="Technical findings, indicators, analysis notes...">{{ investigation.findings or '' }}</textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm">Save findings</button>
+        </form>
+
+        <h4 class="subtitle">Analyst notes</h4>
+        {% if investigation.analyst_notes %}
+          <div class="notes-box">{{ investigation.analyst_notes | nl2br }}</div>
+        {% else %}
+          <p class="muted">No notes yet.</p>
+        {% endif %}
+        <form method="post" action="{{ url_for('analyst.add_note', report_id=report.id) }}" class="inline-form">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="text" name="note" placeholder="Add a note (timestamped)...">
+          <button type="submit" class="btn btn-ghost btn-sm">Add note</button>
+        </form>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">Audit trail (this report)</h3>
+      {% if audit_entries %}
+      <ul class="audit-list">
+        {% for entry in audit_entries %}
+        <li>
+          <span class="audit-action">{{ entry.action | replace('_', ' ') | title }}</span>
+          <span class="muted">{{ entry.created_at.strftime('%Y-%m-%d %H:%M') }} · {{ entry.user_name }}</span>
+          <div class="audit-desc">{{ entry.description }}</div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty-state">No audit entries for this report.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="detail-side">
+    <div class="card">
+      <h3 class="card-title">Investigation controls</h3>
+
+      <form method="post" action="{{ url_for('analyst.change_severity', report_id=report.id) }}" class="stack-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="severity">Change severity</label>
+        <select id="severity" name="severity">
+          {% for key, label in SEVERITIES.items() %}
+            <option value="{{ key }}" {{ 'selected' if report.severity == key }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-ghost btn-sm">Update severity</button>
+      </form>
+
+      <form method="post" action="{{ url_for('analyst.set_classification', report_id=report.id) }}" class="stack-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="classification">Classification</label>
+        <select id="classification" name="classification">
+          <option value="">-- Select --</option>
+          {% for key, label in CLASSIFICATIONS.items() %}
+            <option value="{{ key }}" {{ 'selected' if report.investigation and report.investigation.classification == key }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-ghost btn-sm">Save classification</button>
+      </form>
+
+      <form method="post" action="{{ url_for('analyst.change_status', report_id=report.id) }}" class="stack-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="status">Change status</label>
+        <select id="status" name="status">
+          {% for key, label in STATUSES.items() %}
+            <option value="{{ key }}" {{ 'selected' if report.status == key }}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-ghost btn-sm">Update status</button>
+      </form>
+
+      {% if report.status != 'closed' %}
+      <form method="post" action="{{ url_for('analyst.close_report', report_id=report.id) }}" class="stack-form"
+            data-confirm="Close report #{{ report.id }}? This ends the incident.">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="closing_note">Closing note (optional)</label>
+        <input type="text" id="closing_note" name="closing_note">
+        <button type="submit" class="btn btn-danger btn-sm">Close incident</button>
+      </form>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">Status history</h3>
+      {% if report.status_history %}
+      <ol class="timeline">
+        {% for entry in report.status_history %}
+        <li>
+          <div class="timeline-dot"></div>
+          <div>
+            <strong>{{ STATUSES.get(entry.new_status, entry.new_status) }}</strong>
+            <div class="muted">{{ entry.changed_at.strftime('%Y-%m-%d %H:%M') }} by {{ entry.changed_by }}</div>
+            <small class="muted">from {{ STATUSES.get(entry.previous_status, entry.previous_status) }}</small>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+      {% else %}
+      <p class="empty-state">No status changes yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="form-actions">
+  <a href="{{ url_for('analyst.reports') }}" class="btn btn-ghost">← Back to reports</a>
+</div>
+{% endblock %}

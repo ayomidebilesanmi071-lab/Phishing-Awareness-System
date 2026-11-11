@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% from "macros.html" import status_badge, severity_badge %}
+{% block page_title %}Employee Dashboard{% endblock %}
+{% block content %}
+
+<div class="hero-banner">
+  <div>
+    <h2>See something suspicious? Report it.</h2>
+    <p>Every report helps protect the whole organization. Reporting is always safe and encouraged.</p>
+  </div>
+  <a href="{{ url_for('employee.submit_report') }}" class="btn btn-danger btn-lg">🚨 Report Suspicious Message</a>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-value">{{ total }}</div>
+    <div class="stat-label">Reports submitted</div>
+  </div>
+  <div class="stat-card stat-card-warning">
+    <div class="stat-value">{{ pending }}</div>
+    <div class="stat-label">Pending review</div>
+  </div>
+  <div class="stat-card stat-card-info">
+    <div class="stat-value">{{ under_investigation }}</div>
+    <div class="stat-label">Under investigation</div>
+  </div>
+  <div class="stat-card stat-card-danger">
+    <div class="stat-value">{{ confirmed }}</div>
+    <div class="stat-label">Confirmed phishing</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Recent submissions</h2>
+    <a href="{{ url_for('employee.my_reports') }}" class="btn btn-ghost btn-sm">View all →</a>
+  </div>
+  {% if recent %}
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th><th>Subject</th><th>Attack type</th><th>Severity</th><th>Status</th><th>Submitted</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for report in recent %}
+        <tr>
+          <td><a href="{{ url_for('employee.report_detail', report_id=report.id) }}">#{{ report.id }}</a></td>
+          <td>{{ report.subject }}</td>
+          <td>{{ report.attack_type_label }}</td>
+          <td>{{ severity_badge(report.severity) }}</td>
+          <td>{{ status_badge(report.status) }}</td>
+          <td>{{ report.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="empty-state">You have not submitted any reports yet.</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h2 class="card-title">Staying safe at work</h2>
+  <p>Before clicking anything, ask yourself: was I expecting this? Does it pressure me to
+     act now? Does it ask for credentials or money? When in doubt, report it through PARS.</p>
+  <a href="{{ url_for('awareness.articles') }}" class="btn btn-ghost">Visit the Awareness Center →</a>
+</div>
+{% endblock %}

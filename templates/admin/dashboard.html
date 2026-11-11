@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% from "macros.html" import status_badge %}
+{% block page_title %}Administration Dashboard{% endblock %}
+{% block content %}
+
+<div class="stats-grid">
+  <a class="stat-card stat-card-link" href="{{ url_for('admin.users') }}">
+    <div class="stat-value">{{ users_by_role['employee'] + users_by_role['analyst'] + users_by_role['admin'] }}</div>
+    <div class="stat-label">Total users</div>
+  </a>
+  <a class="stat-card stat-card-info stat-card-link" href="{{ url_for('admin.users') }}">
+    <div class="stat-value">{{ users_by_role['employee'] }}</div>
+    <div class="stat-label">Employees</div>
+  </a>
+  <a class="stat-card stat-card-info stat-card-link" href="{{ url_for('admin.users') }}">
+    <div class="stat-value">{{ users_by_role['analyst'] }}</div>
+    <div class="stat-label">Security analysts</div>
+  </a>
+  <a class="stat-card stat-card-link" href="{{ url_for('analyst.reports') }}">
+    <div class="stat-value">{{ stats.total }}</div>
+    <div class="stat-label">Total reports</div>
+  </a>
+  <a class="stat-card stat-card-warning stat-card-link" href="{{ url_for('analyst.reports', status='pending') }}">
+    <div class="stat-value">{{ stats.status_counts['pending'] }}</div>
+    <div class="stat-label">Pending reports</div>
+  </a>
+  <a class="stat-card stat-card-danger stat-card-link" href="{{ url_for('analyst.reports', status='confirmed_phishing') }}">
+    <div class="stat-value">{{ stats.status_counts['confirmed_phishing'] }}</div>
+    <div class="stat-label">Confirmed phishing</div>
+  </a>
+</div>
+
+<div class="stats-grid">
+  <a class="stat-card stat-card-link" href="{{ url_for('admin.articles') }}">
+    <div class="stat-value">{{ articles_count }}</div>
+    <div class="stat-label">Awareness articles</div>
+  </a>
+  <a class="stat-card stat-card-link" href="{{ url_for('awareness.quiz_history') }}">
+    <div class="stat-value">{{ quizzes_taken }}</div>
+    <div class="stat-label">Quizzes completed</div>
+  </a>
+  <div class="stat-card stat-card-success">
+    <div class="stat-value">{{ avg_score if avg_score is not none else '—' }}%</div>
+    <div class="stat-label">Average quiz score</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Recent security events</h2>
+    <a href="{{ url_for('analyst.history') }}" class="btn btn-ghost btn-sm">Full history →</a>
+  </div>
+  {% if recent_audit %}
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr><th>When</th><th>User</th><th>Action</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        {% for entry in recent_audit %}
+        <tr>
+          <td>{{ entry.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+          <td>{{ entry.user_name }}</td>
+          <td><span class="badge badge-info">{{ entry.action | replace('_', ' ') | title }}</span></td>
+          <td>{{ entry.description }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="empty-state">No security events recorded yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

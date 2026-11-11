@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block page_title %}{{ article.title }}{% endblock %}
+{% block content %}
+
+<div class="card card-narrow">
+  <div class="article-meta">
+    <span class="badge badge-info">{{ ARTICLE_CATEGORIES.get(article.category, article.category) }}</span>
+    <span class="muted">Updated {{ article.updated_at.strftime('%Y-%m-%d') }}</span>
+  </div>
+  <h2 class="article-title">{{ article.title }}</h2>
+  <div class="article-content">{{ article.content | nl2br }}</div>
+  <div class="form-actions">
+    <a href="{{ url_for('awareness.articles') }}" class="btn btn-ghost">← All articles</a>
+    <a href="{{ url_for('awareness.quiz') }}" class="btn btn-primary">📝 Test yourself</a>
+  </div>
+</div>
+{% endblock %}

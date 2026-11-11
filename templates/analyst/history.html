@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% from "macros.html" import pagination_bar %}
+{% block page_title %}Incident History{% endblock %}
+{% block content %}
+
+<div class="detail-grid">
+  <div class="detail-main">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Status change history</h2>
+      </div>
+      {% if pagination.items %}
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Report</th><th>Subject</th><th>Change</th><th>Changed by</th><th>When</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for entry in pagination.items %}
+            <tr>
+              <td>
+                <a href="{{ url_for('analyst.report_detail', report_id=entry.report_id) }}">#{{ entry.report_id }}</a>
+              </td>
+              <td>{{ entry.report.subject }}</td>
+              <td>
+                <span class="badge badge-{{ entry.previous_status }}">{{ STATUSES.get(entry.previous_status, entry.previous_status) }}</span>
+                → <span class="badge badge-{{ entry.new_status }}">{{ STATUSES.get(entry.new_status, entry.new_status) }}</span>
+              </td>
+              <td>{{ entry.changed_by }}</td>
+              <td>{{ entry.changed_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {{ pagination_bar(pagination, 'analyst.history') }}
+      {% else %}
+      <p class="empty-state">No status changes recorded yet.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="detail-side">
+    <div class="card">
+      <h3 class="card-title">Recent security events</h3>
+      {% if recent_audit %}
+      <ul class="audit-list">
+        {% for entry in recent_audit %}
+        <li>
+          <span class="audit-action">{{ entry.action | replace('_', ' ') | title }}</span>
+          <span class="muted">{{ entry.created_at.strftime('%Y-%m-%d %H:%M') }} · {{ entry.user_name }}</span>
+          <div class="audit-desc">{{ entry.description }}</div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty-state">No events recorded.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

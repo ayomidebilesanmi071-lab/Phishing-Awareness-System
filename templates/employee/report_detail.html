@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% from "macros.html" import status_badge, severity_badge %}
+{% block page_title %}Report #{{ report.id }}{% endblock %}
+{% block content %}
+
+<div class="detail-header">
+  <div>
+    <h2>Report #{{ report.id }} <span class="muted">· {{ report.attack_type_label }}</span></h2>
+    <p class="muted">Submitted {{ report.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+  </div>
+  <div class="detail-badges">
+    {{ severity_badge(report.severity) }}
+    {{ status_badge(report.status) }}
+  </div>
+</div>
+
+<div class="detail-grid">
+  <div class="detail-main">
+    <div class="card">
+      <h3 class="card-title">Message details</h3>
+      <dl class="detail-list">
+        <dt>Sender address</dt><dd>{{ report.sender_address }}</dd>
+        <dt>Subject</dt><dd>{{ report.subject }}</dd>
+        <dt>Suspicious link</dt>
+        <dd>
+          {% if report.suspicious_link %}
+            <span class="link-text">{{ report.suspicious_link }}</span>
+            <button type="button" class="btn btn-ghost btn-sm" data-copy="{{ report.suspicious_link }}">Copy</button>
+            <small class="form-help">This link is displayed as text only and is never opened by the system.</small>
+          {% else %}
+            <span class="muted">None provided</span>
+          {% endif %}
+        </dd>
+        <dt>Date received</dt><dd>{{ report.date_received.strftime('%Y-%m-%d') if report.date_received else '—' }}</dd>
+        <dt>Message content</dt><dd>{{ report.message_content | nl2br }}</dd>
+        {% if report.comments %}<dt>Additional comments</dt><dd>{{ report.comments | nl2br }}</dd>{% endif %}
+        {% if report.has_attachment %}
+          <dt>Evidence attachment</dt>
+          <dd><a class="btn btn-ghost btn-sm" href="{{ url_for('employee.attachment', report_id=report.id) }}">⬇ {{ report.attachment_original_name }}</a></dd>
+        {% endif %}
+      </dl>
+    </div>
+
+    {% if report.investigation and report.investigation.classification %}
+    <div class="card">
+      <h3 class="card-title">Investigation outcome</h3>
+      <p>The security team classified this report as
+         <strong>{{ CLASSIFICATIONS.get(report.investigation.classification, report.investigation.classification) }}</strong>.</p>
+      {% if report.investigation.findings %}
+        <p class="muted">{{ report.investigation.findings | nl2br }}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="detail-side">
+    <div class="card">
+      <h3 class="card-title">Status history</h3>
+      {% if report.status_history %}
+      <ol class="timeline">
+        {% for entry in report.status_history %}
+        <li>
+          <div class="timeline-dot"></div>
+          <div>
+            <strong>{{ STATUSES.get(entry.new_status, entry.new_status) }}</strong>
+            <div class="muted">{{ entry.changed_at.strftime('%Y-%m-%d %H:%M') }} by {{ entry.changed_by }}</div>
+            {% if entry.previous_status %}<small class="muted">from {{ STATUSES.get(entry.previous_status, entry.previous_status) }}</small>{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+      {% else %}
+      <p class="empty-state">No status changes recorded yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="form-actions">
+  <a href="{{ url_for('employee.my_reports') }}" class="btn btn-ghost">← Back to my reports</a>
+</div>
+{% endblock %}

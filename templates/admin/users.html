@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block page_title %}Manage Users{% endblock %}
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">User accounts ({{ users | length }})</h2>
+    <a href="{{ url_for('admin.new_user') }}" class="btn btn-primary btn-sm">+ New user</a>
+  </div>
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Created</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.full_name }}</td>
+          <td>{{ user.email }}</td>
+          <td><span class="badge badge-role-{{ user.role }}">{{ user.role_label }}</span></td>
+          <td>
+            {% if user.is_active %}
+              <span class="badge badge-legitimate">Active</span>
+            {% else %}
+              <span class="badge badge-closed">Deactivated</span>
+            {% endif %}
+          </td>
+          <td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+          <td class="table-actions">
+            <a class="btn btn-ghost btn-sm" href="{{ url_for('admin.edit_user', user_id=user.id) }}">Edit</a>
+            {% if user.id != current_user.id %}
+            <form method="post" action="{{ url_for('admin.delete_user', user_id=user.id) }}"
+                  data-confirm="Delete the account for {{ user.email }}?">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

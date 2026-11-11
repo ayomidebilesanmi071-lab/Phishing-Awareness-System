@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block page_title %}Quiz Result{% endblock %}
+{% block content %}
+
+<div class="card card-narrow quiz-result-card">
+  <h2 class="card-title">Quiz result</h2>
+  <div class="quiz-score">
+    <span class="quiz-score-number">{{ result.score }} / {{ result.total_questions }}</span>
+    <span class="quiz-score-pct">{{ percentage }}%</span>
+  </div>
+  <div class="quiz-feedback">
+    <h3>{{ feedback_title }}</h3>
+    <p>{{ feedback_text }}</p>
+  </div>
+  <p class="muted">Completed {{ result.completed_at.strftime('%Y-%m-%d %H:%M') }}</p>
+  <div class="form-actions">
+    <a href="{{ url_for('awareness.quiz') }}" class="btn btn-primary">Retake quiz</a>
+    <a href="{{ url_for('awareness.articles') }}" class="btn btn-ghost">Review articles</a>
+    <a href="{{ url_for('awareness.quiz_history') }}" class="btn btn-ghost">My results</a>
+  </div>
+</div>
+{% endblock %}

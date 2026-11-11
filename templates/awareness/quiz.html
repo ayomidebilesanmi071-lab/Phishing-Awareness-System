@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block page_title %}Phishing Awareness Quiz{% endblock %}
+{% block content %}
+
+<div class="card card-narrow">
+  <div class="card-header">
+    <h2 class="card-title">Phishing awareness quiz</h2>
+    <a href="{{ url_for('awareness.quiz_history') }}" class="btn btn-ghost btn-sm">My results</a>
+  </div>
+  <p class="muted">Answer all {{ questions | length }} questions. Your score is saved so you can
+     track your progress over time.</p>
+
+  <form method="post" action="{{ url_for('awareness.quiz') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% for question in questions %}
+    <fieldset class="quiz-question">
+      <legend>{{ loop.index }}. {{ question.question }}</legend>
+      {% for key, label in question.options() %}
+        <label class="quiz-option">
+          <input type="radio" name="question_{{ question.id }}" value="{{ key }}" required>
+          <span>{{ key | upper }}) {{ label }}</span>
+        </label>
+      {% endfor %}
+    </fieldset>
+    {% endfor %}
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary btn-lg">Submit quiz</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

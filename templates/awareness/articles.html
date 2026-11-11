@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block page_title %}Awareness Center{% endblock %}
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Cybersecurity awareness articles</h2>
+    <a href="{{ url_for('awareness.quiz') }}" class="btn btn-primary btn-sm">📝 Take the quiz</a>
+  </div>
+  <form method="get" action="{{ url_for('awareness.articles') }}" class="filter-bar">
+    <select name="category" onchange="this.form.submit()">
+      <option value="">All categories</option>
+      {% for key, label in categories.items() %}
+        <option value="{{ key }}" {{ 'selected' if category == key }}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </form>
+</div>
+
+{% if articles %}
+<div class="article-grid">
+  {% for article in articles %}
+  <a class="card article-card" href="{{ url_for('awareness.article_detail', article_id=article.id) }}">
+    <div class="article-meta">
+      <span class="badge badge-info">{{ categories.get(article.category, article.category) }}</span>
+      <span class="muted">{{ article.updated_at.strftime('%Y-%m-%d') }}</span>
+    </div>
+    <h3 class="article-title">{{ article.title }}</h3>
+    <p class="article-excerpt">{{ article.content[:140] }}…</p>
+    <span class="article-read">Read article →</span>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card"><p class="empty-state">No articles in this category yet.</p></div>
+{% endif %}
+{% endblock %}

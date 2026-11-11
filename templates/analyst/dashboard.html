@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% from "macros.html" import status_badge, severity_badge %}
+{% block page_title %}Analyst Dashboard{% endblock %}
+{% block content %}
+
+<div class="stats-grid">
+  <a class="stat-card stat-card-link" href="{{ url_for('analyst.reports') }}">
+    <div class="stat-value">{{ stats.total }}</div>
+    <div class="stat-label">Total reports</div>
+  </a>
+  <a class="stat-card stat-card-warning stat-card-link" href="{{ url_for('analyst.reports', status='pending') }}">
+    <div class="stat-value">{{ stats.status_counts['pending'] }}</div>
+    <div class="stat-label">Pending</div>
+  </a>
+  <a class="stat-card stat-card-info stat-card-link" href="{{ url_for('analyst.reports', status='under_investigation') }}">
+    <div class="stat-value">{{ stats.status_counts['under_investigation'] }}</div>
+    <div class="stat-label">Under investigation</div>
+  </a>
+  <a class="stat-card stat-card-danger stat-card-link" href="{{ url_for('analyst.reports', status='confirmed_phishing') }}">
+    <div class="stat-value">{{ stats.status_counts['confirmed_phishing'] }}</div>
+    <div class="stat-label">Confirmed phishing</div>
+  </a>
+  <a class="stat-card stat-card-success stat-card-link" href="{{ url_for('analyst.reports', status='legitimate') }}">
+    <div class="stat-value">{{ stats.status_counts['legitimate'] }}</div>
+    <div class="stat-label">Legitimate</div>
+  </a>
+  <a class="stat-card stat-card-danger stat-card-link" href="{{ url_for('analyst.reports', severity='high') }}">
+    <div class="stat-value">{{ stats.high_severity }}</div>
+    <div class="stat-label">High-severity incidents</div>
+  </a>
+</div>
+
+<div class="chart-grid">
+  <div class="card">
+    <h3 class="card-title">Reports by status</h3>
+    {% for row in status_chart %}
+    <div class="chart-row">
+      <span class="chart-label">{{ row.label }}</span>
+      <div class="chart-bar">
+        <div class="chart-fill chart-fill-{{ row.key }}" style="width: {{ row.pct }}%"></div>
+      </div>
+      <span class="chart-value">{{ row.count }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">Reports by attack type</h3>
+    {% for row in attack_chart %}
+    <div class="chart-row">
+      <span class="chart-label">{{ row.label }}</span>
+      <div class="chart-bar">
+        <div class="chart-fill chart-fill-type" style="width: {{ row.pct }}%"></div>
+      </div>
+      <span class="chart-value">{{ row.count }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">Reports by severity</h3>
+    {% for row in severity_chart %}
+    <div class="chart-row">
+      <span class="chart-label">{{ row.label }}</span>
+      <div class="chart-bar">
+        <div class="chart-fill chart-fill-severity-{{ row.key }}" style="width: {{ row.pct }}%"></div>
+      </div>
+      <span class="chart-value">{{ row.count }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Recent reports</h2>
+    <a href="{{ url_for('analyst.reports') }}" class="btn btn-ghost btn-sm">All reports →</a>
+  </div>
+  {% if stats.recent %}
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th><th>Subject</th><th>Reporter</th><th>Attack type</th>
+          <th>Severity</th><th>Status</th><th>Submitted</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for report in stats.recent %}
+        <tr>
+          <td>#{{ report.id }}</td>
+          <td>{{ report.subject }}</td>
+          <td>{{ report.reporter.full_name }}</td>
+          <td>{{ report.attack_type_label }}</td>
+          <td>{{ severity_badge(report.severity) }}</td>
+          <td>{{ status_badge(report.status) }}</td>
+          <td>{{ report.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+          <td><a class="btn btn-ghost btn-sm" href="{{ url_for('analyst.report_detail', report_id=report.id) }}">Open</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="empty-state">No reports yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

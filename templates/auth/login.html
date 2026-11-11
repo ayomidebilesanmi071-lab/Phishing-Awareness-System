@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Login · PARS{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <div class="auth-brand">
+    <span class="brand-icon brand-icon-lg">🛡️</span>
+    <h1>PARS</h1>
+    <p>Phishing Awareness &amp; Reporting System</p>
+  </div>
+  <form method="post" action="{{ url_for('auth.login') }}" class="auth-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" id="email" name="email" value="{{ email or '' }}" required autofocus autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required autocomplete="current-password">
+    </div>
+    <label class="checkbox-row">
+      <input type="checkbox" name="remember" value="1">
+      <span>Remember me on this device</span>
+    </label>
+    <button type="submit" class="btn btn-primary btn-block">Log in</button>
+  </form>
+  <p class="auth-alt">New employee? <a href="{{ url_for('auth.register') }}">Create an account</a></p>
+  <p class="auth-hint">Demo accounts are listed in the project README. Change default passwords immediately.</p>
+</div>
+{% endblock %}

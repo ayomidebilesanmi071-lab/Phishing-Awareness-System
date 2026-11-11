@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block page_title %}Access Denied{% endblock %}
+{% block content %}
+<div class="card error-card">
+  <div class="error-code">403</div>
+  <h2>Access Denied</h2>
+  <p>Your account does not have permission to view this page. If you believe this is a
+     mistake, contact your security administrator.</p>
+  <a href="{{ url_for('auth.login') if not current_user.is_authenticated else url_for('awareness.articles') }}"
+     class="btn btn-primary">Go to the home page</a>
+</div>
+{% endblock %}

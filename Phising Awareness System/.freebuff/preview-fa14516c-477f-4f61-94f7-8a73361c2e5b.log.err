@@ -1,0 +1,508 @@
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+127.0.0.1 - - [20/Oct/2026 04:55:59] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [20/Oct/2026 04:55:59] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:56:03] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [20/Oct/2026 04:56:04] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [20/Oct/2026 04:56:04] "GET /login?next=/ HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:56:05] "GET /static/css/style.css HTTP/1.1" 304 -
+[2026-10-20 04:56:05,585] ERROR in app: Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 802, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 777, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\app.py", line 225, in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\errors\404.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\base.html", line 31, in top-level template code
+    {% if current_user.can(PERMS.equipment_view) %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'flask_login.mixins.AnonymousUserMixin object' has no attribute 'can'
+127.0.0.1 - - [20/Oct/2026 04:56:05] "GET /favicon.ico HTTP/1.1" 500 -
+Error on request:
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 802, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 777, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\app.py", line 225, in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\errors\404.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\base.html", line 31, in top-level template code
+    {% if current_user.can(PERMS.equipment_view) %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'flask_login.mixins.AnonymousUserMixin object' has no attribute 'can'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\serving.py", line 374, in run_wsgi
+    execute(self.server.app)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\serving.py", line 335, in execute
+    application_iter = app(environ, start_response)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1514, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 860, in handle_exception
+    server_error = self.ensure_sync(handler)(server_error)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\app.py", line 230, in server_error
+    return render_template("errors/500.html"), 500
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\errors\500.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\base.html", line 31, in top-level template code
+    {% if current_user.can(PERMS.equipment_view) %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'flask_login.mixins.AnonymousUserMixin object' has no attribute 'can'
+127.0.0.1 - - [20/Oct/2026 04:56:12] "POST /login?next=/ HTTP/1.1" 302 -
+127.0.0.1 - - [20/Oct/2026 04:56:12] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:56:12] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:56:12] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:56:29] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [20/Oct/2026 04:56:29] "GET /login?next=/ HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:56:30] "GET /static/css/style.css HTTP/1.1" 304 -
+[2026-10-20 04:56:30,257] ERROR in app: Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 802, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 777, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\app.py", line 225, in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\errors\404.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\base.html", line 31, in top-level template code
+    {% if current_user.can(PERMS.equipment_view) %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'flask_login.mixins.AnonymousUserMixin object' has no attribute 'can'
+127.0.0.1 - - [20/Oct/2026 04:56:30] "GET /favicon.ico HTTP/1.1" 500 -
+Error on request:
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 802, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 777, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\app.py", line 225, in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\errors\404.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\base.html", line 31, in top-level template code
+    {% if current_user.can(PERMS.equipment_view) %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'flask_login.mixins.AnonymousUserMixin object' has no attribute 'can'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\serving.py", line 374, in run_wsgi
+    execute(self.server.app)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\serving.py", line 335, in execute
+    application_iter = app(environ, start_response)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1514, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 860, in handle_exception
+    server_error = self.ensure_sync(handler)(server_error)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\app.py", line 230, in server_error
+    return render_template("errors/500.html"), 500
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\errors\500.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\base.html", line 31, in top-level template code
+    {% if current_user.can(PERMS.equipment_view) %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'flask_login.mixins.AnonymousUserMixin object' has no attribute 'can'
+127.0.0.1 - - [20/Oct/2026 04:56:39] "GET /equipment/ HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:56:39] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:56:39] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:56:58] "POST /login?next=/ HTTP/1.1" 302 -
+127.0.0.1 - - [20/Oct/2026 04:56:58] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:56:58] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:56:58] "GET /static/js/main.js HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:57:02] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:57:11] "GET /equipment/ HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:57:11] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:57:11] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:57:16] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:57:23] "GET /equipment/new HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:57:23] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:57:24] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:57:29] "GET /faults/ HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:57:29] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:57:29] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:57:37] "GET /departments/ HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:57:37] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:57:37] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:57:42] "GET /departments/categories HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:57:42] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:57:42] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:04] "POST /departments/categories/new HTTP/1.1" 302 -
+127.0.0.1 - - [20/Oct/2026 04:58:04] "GET /departments/categories HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:58:04] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:04] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:07] "POST /departments/categories/new HTTP/1.1" 302 -
+127.0.0.1 - - [20/Oct/2026 04:58:07] "GET /departments/categories HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:58:07] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:07] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:17] "GET /profile HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:58:17] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:17] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:26] "GET /maintenance/ HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:58:26] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:26] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:36] "GET /faults/ HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:58:37] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:37] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:47] "GET /equipment/new HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:58:47] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:58:47] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:59:51] "GET /faults/new HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 04:59:51] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 04:59:51] "GET /static/js/main.js HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 05:00:22] "POST /logout HTTP/1.1" 302 -
+127.0.0.1 - - [20/Oct/2026 05:00:22] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 05:00:22] "GET /static/css/style.css HTTP/1.1" 304 -
+[2026-10-20 05:00:22,170] ERROR in app: Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 802, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 777, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\app.py", line 225, in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\errors\404.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\base.html", line 31, in top-level template code
+    {% if current_user.can(PERMS.equipment_view) %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'flask_login.mixins.AnonymousUserMixin object' has no attribute 'can'
+127.0.0.1 - - [20/Oct/2026 05:00:22] "GET /favicon.ico HTTP/1.1" 500 -
+Error on request:
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 891, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 500, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 802, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 777, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\app.py", line 225, in not_found
+    return render_template("errors/404.html"), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\errors\404.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\base.html", line 31, in top-level template code
+    {% if current_user.can(PERMS.equipment_view) %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'flask_login.mixins.AnonymousUserMixin object' has no attribute 'can'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\serving.py", line 374, in run_wsgi
+    execute(self.server.app)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\werkzeug\serving.py", line 335, in execute
+    application_iter = app(environ, start_response)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 1514, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\app.py", line 860, in handle_exception
+    server_error = self.ensure_sync(handler)(server_error)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\app.py", line 230, in server_error
+    return render_template("errors/500.html"), 500
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\errors\500.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\templates\base.html", line 31, in top-level template code
+    {% if current_user.can(PERMS.equipment_view) %}
+  File "C:\Users\Mideyy\OneDrive\Dokumente\Phising Awareness System\computer_maintenance_system\.venv\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'flask_login.mixins.AnonymousUserMixin object' has no attribute 'can'
+127.0.0.1 - - [20/Oct/2026 05:00:30] "POST /login HTTP/1.1" 302 -
+127.0.0.1 - - [20/Oct/2026 05:00:30] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [20/Oct/2026 05:00:30] "GET /static/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [20/Oct/2026 05:00:30] "GET /static/js/main.js HTTP/1.1" 304 -
